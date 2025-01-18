@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password List</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            padding-left: 20px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #f2f2f2;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        li:hover {
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+            transform: scale(1.02);
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffeb3b;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ffd700;
+        }
+
+        .admin-info {
+            position: absolute;
+            top: 110px;
+            left: 20px;
+            color: #f2f2f2;
+            font-size: 1.2em;
+        }
+
+        .admin-info p {
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9em;
+            color: #d1d1d1;
+            padding: 10px 0;
+        }
+
+        footer a {
+            color: #ffeb3b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #ffd700;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            ul {
+                width: 95%;
+            }
+
+            li {
+                padding: 10px;
+            }
+
+            .admin-info {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Password List</h1>
+
+    <ul>
+        {% for blog in blogs %}
+        <li><a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <!-- Admin info displayed on left side -->
+    <div class="admin-info">
+        <p>Admin: <strong>abishek</strong></p>
+        <p>Password: <strong>1234</strong></p>
+        <p>Hashed Password:
+            <code>pbkdf2_sha256$260000$X2KAfoy1ePLY5J5vfQ8Qf0$yqFRT7GfK+TWu5l5Uf8O5aGxVLp2cVEnpSiawhImxPY=</code></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Cyber Security Project. All rights reserved. | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+</body>
+
+</html>

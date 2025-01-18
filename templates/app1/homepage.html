@@ -1,0 +1,229 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Homepage</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+            /* Make sure header is a positioned container for the login button */
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        /* Position the Admin Login to the top right */
+        .hero {
+            margin-top: 20px;
+            padding: 30px 15px;
+            animation: fadeIn 1.5s ease-in-out;
+            position: relative;
+        }
+
+        .hero h2 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin: 20px 0;
+        }
+
+        .hero a {
+            text-decoration: none;
+            font-size: 1.2em;
+            color: #f2f2f2;
+            background: #2575fc;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            position: absolute;
+            top: 20px;
+            /* Position it 20px from the top */
+            right: 20px;
+            /* Position it 20px from the right */
+        }
+
+        .hero a:hover {
+            background: #6a11cb;
+            transform: scale(1.1);
+            box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .products {
+            padding: 30px;
+            text-align: left;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .products h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-card .info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-card .info h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .product-card .info p {
+            margin: 10px 0;
+            font-size: 1em;
+            color: #666;
+        }
+
+        .product-card .info a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            background: #2575fc;
+            color: white;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .product-card .info a:hover {
+            background: #6a11cb;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>ShopSphere</h1>
+    </header>
+
+    <div class="hero">
+        <h2>Your World to Explore Amazing Products</h2>
+        <p>Discover exclusive deals, new arrivals, and all-time favorites.</p>
+        <a href="{% url 'login' %}">Admin login</a>
+    </div>
+
+    <div class="products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="{% static 'images/laptop.jpg' %}" alt="Product 1">
+                <div class="info">
+                    <h3>Laptops</h3>
+                    <p>Starts 29999 INR</p>
+                    <a href="#">Buy Now</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="{% static 'images/mobile.jpeg' %}" alt="Product 2">
+                <div class="info">
+                    <h3>Mobile</h3>
+                    <p>Starts 4999 INR</p>
+                    <a href="#">Buy Now</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="{% static 'images/headphone.jpeg' %}" alt="Product 3">
+                <div class="info">
+                    <h3>Headphones</h3>
+                    <p>Starts 399 INR</p>
+                    <a href="#">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ShopSphere. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
