@@ -1,27 +1,59 @@
-# SQL Injection Vulnerability Lab (Django)
+## SQL Injection Vulnerability Lab (Django) - Fixed Version
 
-This repository contains a simple Django-based web application designed to demonstrate a **SQL Injection** vulnerability. The application has a login page that allows users to submit their credentials, and the credentials are used directly in a SQL query without proper sanitization. This exposes the application to SQL Injection attacks.
+This repository contains a simple Django-based web application where a previously existing SQL Injection vulnerability has been fixed. The application now securely handles user credentials during login by using Django's authenticate() method and parameterized queries.
 
 ## Overview
 
-The application contains a vulnerable login feature where an attacker can inject arbitrary SQL code into the login form's inputs. The vulnerability arises from the direct inclusion of user inputs in a SQL query, which can result in unauthorized access to the application.
+The application includes a secure login feature that verifies user credentials using Django's built-in authentication system. This eliminates the SQL Injection vulnerability that allowed attackers to manipulate the SQL query through user inputs.
 
-### Vulnerability Demonstrated:
+## Features:
 
-- **SQL Injection**: The vulnerability allows an attacker to manipulate the SQL query by injecting malicious SQL code through user input fields. This can bypass authentication, retrieve sensitive data, or modify the database.
+    1.Secure Login Form: Only allows users with valid credentials to log in.
+    2.SQL Injection Prevention: User inputs are sanitized and processed using Django's ORM and authenticate() method.
 
-### Example:
-If an attacker submits the following string in the username field:
+## Key Changes and Fix
+Vulnerability Fixed:
 
-```sql
-' OR 1=1 -- 
-```
-And any value in the password field, the application will log in without checking the credentials, due to the injected OR 1=1 condition, which always evaluates to true. This is the essence of SQL Injection.
+The application no longer accepts malicious SQL code in the login form. All user inputs are now validated and securely processed.
+## Before Fix (Vulnerable Code):
 
-### Features:
-- **Login Form**: Allows users to enter their username and password.
-- **Vulnerable to SQL Injection**: The application uses user input directly in SQL queries without proper sanitization, making it susceptible to SQL Injection.
-  
+The old implementation used raw SQL queries to verify credentials:
+
+query = f"SELECT * FROM auth_user WHERE username='{username}' AND password='{password}'"
+with connection.cursor() as cursor:
+    cursor.execute(query)
+    user = cursor.fetchone()
+
+This approach allowed attackers to inject SQL commands, bypass authentication, and access the system.
+
+## After Fix (Safe Code):
+
+The new implementation uses Django's authenticate() method:
+
+from django.contrib.auth import authenticate, login
+
+def login_view(request):
+    error = None
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Authenticate using Django's built-in method
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Log the user in and redirect to the blog list page
+            login(request, user)
+            return redirect('blog_list')
+        else:
+            # Display an error message for invalid credentials
+            error = "Invalid username or password!"
+    
+    return render(request, 'app1/login.html', {'error': error})
+
+    i)authenticate(): Safely checks user credentials, preventing SQL Injection by escaping inputs.
+    ii)Error Messages: Provides a generic error message to avoid giving clues about existing usernames.
+
 ## Running the Application
 Follow these steps to run the application locally:
 
@@ -33,7 +65,7 @@ Follow these steps to run the application locally:
 ### Steps:
 1. Clone the repository:
 ```bash
-git clone https://github.com/Abishek_Kumar_GHub/SQL-XSS-vul.git
+git clone https://github.com/Darshanjp/SQL-XSS-vul.git
 cd sql-injection-lab
 ```
 2. Create a virtual environment (optional but recommended):
@@ -65,7 +97,9 @@ Open your browser and navigate to http://127.0.0.1:8000/. You can now attempt th
 5. You will be logged in without proper credentials, demonstrating the SQL Injection vulnerability.
    
 ## Fixing the Vulnerability (Solution)
-The vulnerability can be fixed by using parameterized queries or Django's built-in ORM methods, which automatically escape user input to prevent SQL Injection attacks.
+1.Open the application in your browser: http://127.0.0.1:8000/login/.
+2.Log in using valid credentials (you can create users through the Django admin panel or database setup).
+3.Invalid credentials will result in an error message: "Invalid username or password!"
 
 ### Example of Fix:
 In the vulnerable view, replace the raw SQL query with Django's built-in authenticate() method that uses the ORM to safely query the database.
