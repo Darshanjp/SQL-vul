@@ -1,6 +1,6 @@
 ## SQL Injection Vulnerability Lab (Django) - Fixed Version
 
-This repository contains a simple Django-based web application where a previously existing SQL Injection vulnerability has been fixed. The application now securely handles user credentials during login by using Django's authenticate() method and parameterized queries.
+This repository contains a simple Django-based web application where  SQL Injection vulnerability has been fixed. The application now securely handles user credentials during login by using Django's authenticate() method and parameterized queries.
 
 ## Overview
 
